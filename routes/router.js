@@ -1,5 +1,6 @@
 const { Router } = require("express")
-const { signup_get, signup_post, login_get, login_post} = require("../controlers/authControlers")
+const { signup_get, signup_post, login_get, login_post } = require("../controlers/authControlers")
+
 
 const router = Router()
 
@@ -13,7 +14,7 @@ const router = Router()
   router.get("/login", login_get)
 //signup post route
 
-router.post("signup", signup_post)
+router.post("/signup", signup_post)
 
 // signup get route
 
