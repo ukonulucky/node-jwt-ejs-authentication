@@ -1,5 +1,27 @@
 const user = require("../models/userSchema")
 
+
+// creating a function to handle the errors
+const handleError = (err) => {
+  
+  const generatedError = {
+    email: "", 
+    password: "",
+    
+  }
+  if (err.message.includes("user validation failed")) {
+    errorArray = Object.values(err.errors)
+    errorArray.map((i) => {
+         generatedError[i.properties.path] = i.properties.message
+    })
+  }
+  if (err.code) {
+    generatedError["email"] = "email allready exist"
+  }
+  return generatedError
+ 
+}
+
 const signup_get = (req, res) => {
   res.render("signup")
 }
@@ -10,9 +32,10 @@ const signup_post = async(req,res) => {
        const newUser = new user({ email, password })
      const newUserResponse =  await newUser.save()
            res.status(201).json(newUserResponse)
-     
+    
    } catch (error) {
-     res.status(400).json(error.message)
+     const errObject = handleError(error)
+     res.status(400).json(errObject)
    }
 }
 
