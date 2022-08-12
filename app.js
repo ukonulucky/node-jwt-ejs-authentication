@@ -17,7 +17,11 @@ const port = process.env.PORT || 7000
 
 // database connection
 const dbURI = 'mongodb+srv://Lucky490:Lucky4940@cluster0.mtmycqy.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
   .then((result) => app.listen(port, () => {
    console.log("server running on port", port)
   }))

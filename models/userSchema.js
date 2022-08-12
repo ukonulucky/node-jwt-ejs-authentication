@@ -1,6 +1,6 @@
 const { isEmail } = require("validator")
 const mongoose = require("mongoose")
-const { getModeForUsageLocation } = require("typescript")
+const bcrypt = require("bcrypt")
 
 const userSchema = mongoose.Schema({
     email: {
@@ -15,6 +15,12 @@ const userSchema = mongoose.Schema({
         required: [true, "password is required"],
         minlength:[6, "password should have a minlength of 6 characters"],
     }
+})
+
+userSchema.pre("save", async function (next) {
+    const newSalt = await bcrypt.genSalt()
+    this.password = await bcrypt.hash(this.password, newSalt)
+    next()
 })
 
 const user = mongoose.model("user", userSchema)
